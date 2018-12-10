@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FormContainer /> matches snapshot 1`] = `
+.emotion-0 {
+  padding: 0 1rem;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 432px;
+}
+
+<FormContainer>
+  <div
+    className="emotion-0"
+  />
+</FormContainer>
+`;

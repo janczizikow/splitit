@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FormGroup/> matches snapshot 1`] = `
+.emotion-0 {
+  margin-bottom: 1rem;
+}
+
+<FormGroup>
+  <div
+    className="emotion-0"
+  />
+</FormGroup>
+`;

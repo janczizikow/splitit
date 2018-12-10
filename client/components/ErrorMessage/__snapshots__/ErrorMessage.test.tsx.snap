@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ErrorMessage/> matches snapshot 1`] = `
+.emotion-0 {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  color: #ff483b;
+  text-align: center;
+  background-color: #ffebe4;
+}
+
+<ErrorMessage
+  theme={
+    Object {
+      "borderRadius": 2,
+      "colors": Object {
+        "border": "#bac3c3",
+        "error": "#ff483b",
+        "errorBg": "#ffebe4",
+        "primary": "#00ccbb",
+        "success": "#006d68",
+        "successBg": "#edfad0",
+      },
+      "gridBreakpoints": Array [
+        0,
+        576,
+        768,
+        992,
+        1200,
+      ],
+      "gridColumns": 12,
+      "gridGutters": 16,
+    }
+  }
+>
+  <div
+    className="emotion-0"
+  />
+</ErrorMessage>
+`;

@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Layout /> matches snapshot 1`] = `
+<Styled(div)>
+  <Header />
+  <Styled(main)>
+    <span>
+      Child
+    </span>
+  </Styled(main)>
+</Styled(div)>
+`;

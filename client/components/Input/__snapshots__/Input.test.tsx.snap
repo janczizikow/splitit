@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Input /> matches snapshot 1`] = `
+.emotion-0 {
+  padding: 0.75rem 1rem;
+  display: inline-block;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.15;
+  background-color: #fff;
+  border: 1px solid #bac3c3;
+  border-radius: 2px;
+  -webkit-transition: box-shadow 0.15s ease-out,border-color 0.15s ease-out;
+  transition: box-shadow 0.15s ease-out,border-color 0.15s ease-out;
+  caret-color: #00ccbc;
+}
+
+.emotion-0:focus {
+  border: 1px solid #00ccbb;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0,204,187,0.3);
+}
+
+<Styled(input)
+  theme={
+    Object {
+      "borderRadius": 2,
+      "colors": Object {
+        "border": "#bac3c3",
+        "error": "#ff483b",
+        "primary": "#00ccbb",
+        "success": "#006d68",
+        "successBg": "#edfad0",
+      },
+      "gridBreakpoints": Array [
+        0,
+        576,
+        768,
+        992,
+        1200,
+      ],
+      "gridColumns": 12,
+      "gridGutters": 16,
+    }
+  }
+>
+  <input
+    className="emotion-0"
+  />
+</Styled(input)>
+`;
