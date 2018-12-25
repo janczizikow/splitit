@@ -34,7 +34,10 @@ const Header = () => (
               <a>Splitit</a>
             </Link>
             {me.data.me ? (
-              <Signout />
+              <div>
+                {me.data.me.name}
+                <Signout />
+              </div>
             ) : (
               <Link href="/login">
                 <LoginBtn sm>Log in</LoginBtn>

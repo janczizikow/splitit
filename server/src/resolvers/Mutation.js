@@ -117,6 +117,23 @@ const Mutation = {
     });
 
     return updatedUser;
+  },
+  async updateUser(parent, args, ctx, info) {
+    if (!ctx.request.userId) {
+      throw new Error("You must be logged in!");
+    }
+
+    const updatedUser = await ctx.db.mutation.updateUser(
+      {
+        where: { id: ctx.request.userId },
+        data: {
+          ...args
+        }
+      },
+      info
+    );
+
+    return updatedUser;
   }
 };
 

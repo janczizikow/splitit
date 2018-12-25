@@ -81,7 +81,7 @@ const Signup: React.FunctionComponent<Props> = ({ client }) => (
               <Form noValidate>
                 <Field
                   name="name"
-                  type="name"
+                  type="text"
                   label="Name"
                   block
                   component={FormField}

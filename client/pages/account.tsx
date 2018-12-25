@@ -1,9 +1,10 @@
 import React from "react";
+import { NextContext } from "next";
 import { ApolloClient } from "apollo-boost";
 import Layout from "../components/Layout";
+import Account from "../components/Account";
 import checkLoggedIn from "../lib/checkLoggedIn";
 import redirect from "../lib/redirect";
-import { NextContext } from "next";
 
 class AccountPage extends React.Component {
   static async getInitialProps(
@@ -23,7 +24,7 @@ class AccountPage extends React.Component {
   render() {
     return (
       <Layout>
-        <p>this should be a prive route</p>
+        <Account />
       </Layout>
     );
   }
