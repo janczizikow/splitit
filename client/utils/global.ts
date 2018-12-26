@@ -37,6 +37,24 @@ const globalStyles = css`
     background-color: #fff !important;
     background-image: none;
   }
+
+  /* Dropdown animation styles */
+  .dropdown-enter {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .dropdown-enter-active {
+    opacity: 1;
+    transform: translateY(0px);
+    transition: opacity 300ms ease, transform 300ms ease;
+  }
+
+  .dropdown-exit-active {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 300ms ease, transform 300ms ease;
+  }
 `;
 
 export default globalStyles;

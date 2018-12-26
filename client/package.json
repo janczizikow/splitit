@@ -25,6 +25,8 @@
     "react": "^16.6.3",
     "react-apollo": "^2.3.2",
     "react-dom": "^16.6.3",
+    "react-onclickoutside": "^6.7.1",
+    "react-transition-group": "^2.5.2",
     "yup": "^0.26.6"
   },
   "devDependencies": {
@@ -32,6 +34,8 @@
     "@types/next": "^7.0.5",
     "@types/react": "^16.7.11",
     "@types/react-dom": "^16.0.11",
+    "@types/react-onclickoutside": "^6.7.0",
+    "@types/react-transition-group": "^2.0.15",
     "@types/yup": "^0.26.2",
     "@zeit/next-typescript": "^1.1.1",
     "babel-core": "^7.0.0-beta.4",

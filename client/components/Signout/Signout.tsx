@@ -29,7 +29,7 @@ class Signout extends React.Component {
     return (
       <ApolloConsumer>
         {(client: ApolloClient<any>) => (
-          <button onClick={() => this.signout(client)}>Signout</button>
+          <button onClick={this.signout.bind(this, client)}>Signout</button>
         )}
       </ApolloConsumer>
     );

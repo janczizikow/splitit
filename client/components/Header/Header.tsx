@@ -4,6 +4,7 @@ import Link from "next/link";
 import User from "../User";
 import Container from "../Container";
 import Button from "../Button";
+import { Dropdown, DropdownItem } from "../Dropdown";
 import Signout from "../Signout";
 
 const HeaderStyles = styled.header`
@@ -34,10 +35,16 @@ const Header = () => (
               <a>Splitit</a>
             </Link>
             {me.data.me ? (
-              <div>
-                {me.data.me.name}
-                <Signout />
-              </div>
+              <Dropdown title={me.data.me.name}>
+                <DropdownItem>
+                  <Link href="/account">
+                    <a>Account</a>
+                  </Link>
+                </DropdownItem>
+                <DropdownItem>
+                  <Signout />
+                </DropdownItem>
+              </Dropdown>
             ) : (
               <Link href="/login">
                 <LoginBtn sm>Log in</LoginBtn>

@@ -6,6 +6,7 @@ const colors = {
   successBg: "#edfad0",
   border: "#bac3c3",
   greyBg: "#f9fafa",
+  lightGreyBg: "#f5f5f5",
   headingColor: "#2e3333"
 };
 
