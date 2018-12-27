@@ -3,12 +3,12 @@ import { Mutation, withApollo, WithApolloClient } from "react-apollo";
 import gql from "graphql-tag";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import FormContainer from "../FormContainer";
-import FormField from "../FormField";
-import Button from "../Button";
-import Heading from "../Heading";
-import ErrorMessage from "../ErrorMessage";
 import { CURRENT_USER_QUERY } from "../User";
+import FormField from "../FormField";
+import FormContainer from "../../styles/FormContainer";
+import Button from "../../styles/Button";
+import Heading from "../../styles/Heading";
+import ErrorMessage from "../ErrorMessage";
 import redirect from "../../lib/redirect";
 
 const REST_PASSWORD_MUTATION = gql`

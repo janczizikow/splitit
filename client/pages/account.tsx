@@ -16,8 +16,6 @@ class AccountPage extends React.Component {
       redirect(context, "/login");
     }
 
-    console.log(res);
-
     return { user: { ...res.data.me } };
   }
 

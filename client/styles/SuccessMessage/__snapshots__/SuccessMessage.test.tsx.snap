@@ -17,6 +17,10 @@ exports[`<SuccessMessage/> matches snapshot 1`] = `
       "colors": Object {
         "border": "#bac3c3",
         "error": "#ff483b",
+        "errorBg": "#ffebe4",
+        "greyBg": "#f9fafa",
+        "headingColor": "#2e3333",
+        "lightGreyBg": "#f5f5f5",
         "primary": "#00ccbb",
         "success": "#006d68",
         "successBg": "#edfad0",

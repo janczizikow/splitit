@@ -2,8 +2,8 @@
 
 exports[`<FormContainer /> matches snapshot 1`] = `
 .emotion-0 {
-  padding: 0 1rem;
-  margin: 0 auto;
+  padding: 1rem;
+  margin: auto;
   width: 100%;
   max-width: 432px;
 }

@@ -2,11 +2,13 @@
 
 exports[`<Layout /> matches snapshot 1`] = `
 <Styled(div)>
+  <Meta />
   <Header />
   <Styled(main)>
     <span>
       Child
     </span>
   </Styled(main)>
+  <Footer />
 </Styled(div)>
 `;

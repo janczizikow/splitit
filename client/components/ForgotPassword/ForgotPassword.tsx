@@ -4,12 +4,12 @@ import gql from "graphql-tag";
 import { Formik, Form, Field, FormikBag } from "formik";
 import * as Yup from "yup";
 import styled from "@emotion/styled";
-import FormContainer from "../FormContainer";
 import FormField from "../FormField";
-import Button from "../Button";
-import Heading from "../Heading";
-import SuccessMessage from "../SuccessMessage";
 import ErrorMessage from "../ErrorMessage";
+import FormContainer from "../../styles/FormContainer";
+import Button from "../../styles/Button";
+import Heading from "../../styles/Heading";
+import SuccessMessage from "../../styles/SuccessMessage";
 
 const FORGOT_PASSWORD_MUTATION = gql`
   mutation requestResetPassword($email: String!) {

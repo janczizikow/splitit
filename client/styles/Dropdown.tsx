@@ -7,6 +7,8 @@ export const DropdownStyles = styled.div`
 `;
 
 export const DropdownTriggerStyles = styled.button`
+  position: relative;
+  margin-right: 0.5rem;
   display: flex;
   align-items: center;
   height: 100%;
@@ -17,6 +19,18 @@ export const DropdownTriggerStyles = styled.button`
   padding: 0;
   outline: 0;
   cursor: pointer;
+
+  &::after {
+    color: #abadad;
+    display: inline-block;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+    content: "";
+    border-top: 0.325rem solid;
+    border-right: 0.325rem solid transparent;
+    border-bottom: 0;
+    border-left: 0.325rem solid transparent;
+  }
 `;
 
 export const DropdownMenuStyles = styled.ul`

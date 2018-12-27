@@ -5,8 +5,11 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import User from "../User";
 import FormField from "../FormField";
-import Button from "../Button";
 import ErrorMessage from "../ErrorMessage";
+import Button from "../../styles/Button";
+import Container from "../../styles/Container";
+import Row from "../../styles/Row";
+import Col from "../../styles/Col";
 
 const UPDATE_USER_MUTATION = gql`
   mutation updateUser($email: String, $name: String) {
@@ -40,43 +43,50 @@ class Account extends React.Component {
           data.me ? (
             <Mutation mutation={UPDATE_USER_MUTATION}>
               {(updateUser, { loading, error }) => (
-                <Formik
-                  initialValues={{
-                    name: data.me.name,
-                    email: data.me.email
-                  }}
-                  validationSchema={updateUserValidationSchema}
-                  onSubmit={(values: FormValues) =>
-                    this.formSubmitHandle(values, updateUser)
-                  }
-                >
-                  {() => (
-                    <Form noValidate>
-                      <Field
-                        name="name"
-                        type="text"
-                        label="Name"
-                        block
-                        component={FormField}
-                      />
-                      <Field
-                        name="email"
-                        type="text"
-                        label="Email"
-                        block
-                        component={FormField}
-                      />
-                      <Button
-                        type="submit"
-                        disabled={loading}
-                        loading={loading}
-                        block
+                <Container>
+                  <Row>
+                    <Col md={8} mdOffset={2}>
+                      <ErrorMessage error={error} />
+                      <Formik
+                        initialValues={{
+                          name: data.me.name,
+                          email: data.me.email
+                        }}
+                        validationSchema={updateUserValidationSchema}
+                        onSubmit={(values: FormValues) =>
+                          this.formSubmitHandle(values, updateUser)
+                        }
                       >
-                        Update account
-                      </Button>
-                    </Form>
-                  )}
-                </Formik>
+                        {() => (
+                          <Form noValidate>
+                            <Field
+                              name="name"
+                              type="text"
+                              label="Name"
+                              block
+                              component={FormField}
+                            />
+                            <Field
+                              name="email"
+                              type="text"
+                              label="Email"
+                              block
+                              component={FormField}
+                            />
+                            <Button
+                              type="submit"
+                              disabled={loading}
+                              loading={loading}
+                              block
+                            >
+                              Update account
+                            </Button>
+                          </Form>
+                        )}
+                      </Formik>
+                    </Col>
+                  </Row>
+                </Container>
               )}
             </Mutation>
           ) : (

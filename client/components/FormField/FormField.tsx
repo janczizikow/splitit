@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { FieldProps } from "formik";
-import Input from "../Input";
+import Input from "../../styles/Input";
 
 interface OwnProps {
   label: string;

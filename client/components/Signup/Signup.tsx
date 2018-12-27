@@ -5,12 +5,12 @@ import gql from "graphql-tag";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import styled from "@emotion/styled";
-import FormContainer from "../FormContainer";
-import FormField from "../FormField";
-import Button from "../Button";
-import Heading from "../Heading";
 import ErrorMessage from "../ErrorMessage";
 import { CURRENT_USER_QUERY } from "../User";
+import Button from "../../styles/Button";
+import FormContainer from "../../styles/FormContainer";
+import FormField from "../FormField";
+import Heading from "../../styles/Heading";
 import redirect from "../../lib/redirect";
 
 const SIGNUP_MUTATION = gql`
