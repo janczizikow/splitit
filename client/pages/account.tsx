@@ -1,15 +1,12 @@
 import React from "react";
-import { NextContext } from "next";
-import { ApolloClient } from "apollo-boost";
 import Layout from "../components/Layout";
 import Account from "../components/Account";
 import checkLoggedIn from "../lib/checkLoggedIn";
 import redirect from "../lib/redirect";
+import { NextContextWithApollo } from "../utils/types";
 
 class AccountPage extends React.Component {
-  static async getInitialProps(
-    context: NextContext & { apolloClient: ApolloClient<any> }
-  ) {
+  static async getInitialProps(context: NextContextWithApollo) {
     const res = await checkLoggedIn(context.apolloClient);
     if (!res.data.me) {
       // If not signed in, send them somewhere more useful
