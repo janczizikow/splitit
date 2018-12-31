@@ -1,27 +1,23 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { randomBytes } = require("crypto");
-const { promisify } = require("util");
-const { transport } = require("../mail");
-const { resetPasswordEmail } = require("../mailTemplates/resetPassword");
+import * as bcrypt from "bcryptjs";
+import * as jwt from "jsonwebtoken";
+import { randomBytes } from "crypto";
+import { promisify } from "util";
+import { transport } from "../../mail";
+import { resetPasswordEmail } from "./../../mailTemplates/resetPassword";
+import { Context } from "../../utils";
 
-const Mutation = {
-  async signup(parent, args, ctx, info) {
-    const { email } = args.email.toLowerCase();
+export const auth = {
+  async signup(parent, args, ctx: Context) {
+    args.email = args.email.toLowerCase();
     const passwordDigest = await bcrypt.hash(args.password, 10);
     delete args.password;
 
-    const user = await ctx.db.mutation.createUser(
-      {
-        data: {
-          ...args,
-          password: passwordDigest
-        }
-      },
-      info
-    );
+    const user = await ctx.prisma.createUser({
+      ...args,
+      password: passwordDigest
+    });
 
-    const token = jwt.sign({ userId: user.id }, process.env.SECRET);
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
     ctx.response.cookie("token", token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 30 // 30 days
@@ -29,21 +25,21 @@ const Mutation = {
 
     return user;
   },
-  async login(parent, args, ctx, info) {
-    const { email, password } = args;
-    const user = await ctx.db.query.user({ where: { email } });
 
+  async login(parent, { email, password }, ctx: Context) {
+    email = email.toLowerCase();
+    const user = await ctx.prisma.user({ email });
     if (!user) {
-      throw new Error("User doesn't exist");
+      throw new Error(`No such user found for email: ${email}`);
     }
 
     const hasValidCredentials = await bcrypt.compare(password, user.password);
 
     if (!hasValidCredentials) {
-      throw new Error("Invalid email or password");
+      throw new Error("Invalid password");
     }
 
-    const token = jwt.sign({ userId: user.id }, process.env.SECRET);
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET);
     ctx.response.cookie("token", token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 30 // 30 days
@@ -51,12 +47,14 @@ const Mutation = {
 
     return user;
   },
-  signout(parent, args, ctx, info) {
+
+  async signout(parent, args, ctx: Context, info) {
     ctx.response.clearCookie("token");
     return { message: "You signed out succesfully" };
   },
+
   async requestResetPassword(parent, args, ctx, info) {
-    const user = await ctx.db.query.user({ where: { email: args.email } });
+    const user = await ctx.prisma.user({ email: args.email });
 
     if (!user) {
       throw new Error(`No user found for email ${args.email}`);
@@ -64,7 +62,7 @@ const Mutation = {
 
     const resetToken = (await promisify(randomBytes)(20)).toString("hex");
     const resetTokenExpiry = Date.now() + 3 * 3600000; // 3 hours
-    const res = await ctx.db.mutation.updateUser({
+    const res = await ctx.prisma.updateUser({
       where: { email: args.email },
       data: {
         resetToken,
@@ -82,6 +80,7 @@ const Mutation = {
 
     return { message: `Password reset e-mail sent to '${args.email}'` };
   },
+
   async resetPassword(parent, args, ctx, info) {
     const { password, confirmPassword, resetToken } = args;
 
@@ -89,7 +88,7 @@ const Mutation = {
       throw new Error("Passwords don't match");
     }
 
-    const [user] = await ctx.db.query.users({
+    const [user] = await ctx.prisma.users({
       where: {
         resetToken: resetToken,
         resetTokenExpiry_gte: Date.now() - 3 * 3600000
@@ -101,7 +100,7 @@ const Mutation = {
     }
 
     const passwordDigest = await bcrypt.hash(password, 10);
-    const updatedUser = await ctx.db.mutation.updateUser({
+    const updatedUser = await ctx.prisma.updateUser({
       where: { email: user.email },
       data: {
         password: passwordDigest,
@@ -110,7 +109,7 @@ const Mutation = {
       }
     });
 
-    const token = jwt.sign({ userId: updatedUser.id }, process.env.SECRET);
+    const token = jwt.sign({ userId: updatedUser.id }, process.env.APP_SECRET);
     ctx.response.cookie("token", token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 30 // 30 days
@@ -118,12 +117,13 @@ const Mutation = {
 
     return updatedUser;
   },
+
   async updateUser(parent, args, ctx, info) {
     if (!ctx.request.userId) {
       throw new Error("You must be logged in!");
     }
 
-    const updatedUser = await ctx.db.mutation.updateUser(
+    const updatedUser = await ctx.prisma.updateUser(
       {
         where: { id: ctx.request.userId },
         data: {
@@ -136,5 +136,3 @@ const Mutation = {
     return updatedUser;
   }
 };
-
-module.exports = Mutation;

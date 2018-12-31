@@ -1,6 +1,7 @@
-const nodemailer = require("nodemailer");
+import * as nodemailer from "nodemailer";
 
-const transport = nodemailer.createTransport({
+export const transport = nodemailer.createTransport({
+  // @ts-ignore
   host: process.env.MAIL_HOST,
   port: process.env.MAIL_PORT,
   secure: false, // true for 465, false for other ports
@@ -9,5 +10,3 @@ const transport = nodemailer.createTransport({
     pass: process.env.MAIL_PASSWORD
   }
 });
-
-module.exports = { transport };
