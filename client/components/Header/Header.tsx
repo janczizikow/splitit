@@ -2,10 +2,12 @@ import React from "react";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import User from "../User";
-import Container from "../Container";
-import Button from "../Button";
+import Avatar from "../../styles/Avatar";
+import Container from "../../styles/Container";
+import Button from "../../styles/Button";
 import { Dropdown, DropdownItem } from "../Dropdown";
 import Signout from "../Signout";
+import logo from "../../static/splitit_logo_v1.svg";
 
 const HeaderStyles = styled.header`
   width: 100%;
@@ -32,10 +34,19 @@ const Header = () => (
         <Container>
           <HeaderInner>
             <Link href="/">
-              <a>Splitit</a>
+              <a>
+                <img src={logo} />
+              </a>
             </Link>
             {me.data.me ? (
-              <Dropdown title={me.data.me.name}>
+              <Dropdown
+                title={
+                  <>
+                    <Avatar sm src={me.data.me.avatar} />
+                    <span>{me.data.me.name}</span>
+                  </>
+                }
+              >
                 <DropdownItem>
                   <Link href="/account">
                     <a>Account</a>

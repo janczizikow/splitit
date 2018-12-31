@@ -5,7 +5,7 @@ exports[`<Input /> matches snapshot 1`] = `
   padding: 0.75rem 1rem;
   display: inline-block;
   font-family: inherit;
-  font-size: 1rem;
+  font-size: inherit;
   line-height: 1.15;
   background-color: #fff;
   border: 1px solid #bac3c3;

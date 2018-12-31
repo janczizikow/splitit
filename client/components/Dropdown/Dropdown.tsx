@@ -13,7 +13,7 @@ interface Props {
 interface State {
   open: boolean;
 }
-class Dropdown extends React.Component<Props, State> {
+class Dropdown extends React.PureComponent<Props, State> {
   state = {
     open: false
   };

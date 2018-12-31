@@ -10,6 +10,7 @@ export default (apolloClient: ApolloClient<any>) =>
             id
             email
             name
+            avatar
           }
         }
       `

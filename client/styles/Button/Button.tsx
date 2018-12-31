@@ -23,6 +23,7 @@ const Button = styled.button`
   padding: ${(p: Props) => (p.sm ? "0.5rem 1rem" : "0.75rem 1.5rem")};
   display: ${(p: Props) => (p.block ? "block" : "inline-block")};
   width: ${(p: Props) => p.block && "100%"};
+  font-family: inherit;
   font-size: 1rem;
   font-weight: 600;
   color: ${(p: Props) => (p.loading ? "transparent" : "#fff")};

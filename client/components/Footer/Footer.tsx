@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import Container from "../Container";
+import Container from "../../styles/Container";
 
 const FooterStyles = styled.footer`
   padding: 1.5rem 0;

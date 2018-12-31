@@ -12,7 +12,7 @@ const Input = styled.input`
   display: ${(p: Props) => (p.block ? "block" : "inline-block")};
   width: ${(p: Props) => p.block && "100%"};
   font-family: inherit;
-  font-size: 1rem;
+  font-size: inherit;
   line-height: 1.15;
   background-color: #fff;
   border: ${p =>

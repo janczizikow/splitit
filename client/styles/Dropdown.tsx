@@ -59,12 +59,14 @@ export const DropdownItemStyles = styled.li`
     padding: 0.5rem 1rem;
     display: block;
     width: 100%;
+    font-family: inherit;
     font-size: 0.875rem;
     font-weight: normal;
     text-align: left;
     background-color: transparent;
     border: 0;
     color: ${({ theme }) => theme.colors.primary};
+    cursor: pointer;
   }
 
   a:hover,
