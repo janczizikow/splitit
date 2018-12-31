@@ -5,4 +5,5 @@ type User {
   resetToken: String
   resetTokenExpiry: Float
   name: String!
+  avatar: String
 }

@@ -14,13 +14,19 @@ type Mutation {
     confirmPassword: String!
     resetToken: String!
   ): User!
-  updateUser(email: String, password: String, name: String): User!
+  updateUser(
+    email: String
+    password: String
+    name: String
+    avatar: String
+  ): User!
 }
 
 type User {
   id: ID!
   email: String!
   name: String!
+  avatar: String
 }
 
 type Message {
