@@ -3,6 +3,7 @@ import { Mutation, MutationFn } from "react-apollo";
 import gql from "graphql-tag";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import AvatarUploader from "../AvatarUploader";
 import User from "../User";
 import FormField from "../FormField";
 import ErrorMessage from "../ErrorMessage";
@@ -46,9 +47,11 @@ class Account extends React.Component {
                 <Container>
                   <Row>
                     <Col md={8} mdOffset={2}>
+                      <AvatarUploader avatar={data.me.avatar} />
                       <ErrorMessage error={error} />
                       <Formik
                         initialValues={{
+                          avatar: data.me.avatar || "",
                           name: data.me.name,
                           email: data.me.email
                         }}
