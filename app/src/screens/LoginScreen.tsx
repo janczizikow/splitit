@@ -1,12 +1,171 @@
-import React, { Component } from "react";
-import { Text, View } from "react-native";
+import React, { PureComponent } from "react";
+import { View, StyleSheet } from "react-native";
+import {
+  Text,
+  FormLabel,
+  FormInput,
+  FormValidationMessage,
+  Button
+} from "react-native-elements";
+import { NavigationScreenProps } from "react-navigation";
+import { Mutation } from "react-apollo";
+import gql from "graphql-tag";
+import { Formik } from "formik";
+import * as Yup from "yup";
+import ErrorMessage from "../components/ErrorMessage";
 
-export default class LoginScreen extends Component {
+const LOGIN_MUTATION = gql`
+  mutation loginMutation($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      id
+      email
+      name
+    }
+  }
+`;
+
+const LoginSchema = Yup.object().shape({
+  email: Yup.string()
+    .email("Email address is invalid")
+    .required("Required"),
+  password: Yup.string().required("Required")
+});
+
+interface FormValues {
+  email: string;
+  password: string;
+}
+
+class LoginScreen extends PureComponent<NavigationScreenProps> {
+  static navigationOptions = ({ navigation }: NavigationScreenProps) => ({
+    header: null
+  });
+
+  handleLogin = async (values: FormValues) => {
+    // await AsyncStorage.setItem('userToken', token);
+  };
+
+  goToSignup = () => {
+    this.props.navigation.navigate("Signup");
+  };
+
+  goToForgotPassword = () => {
+    this.props.navigation.navigate("ForgotPassword");
+  };
+
+  navigateToApp = () => {
+    this.props.navigation.navigate("App");
+  };
+
   render() {
     return (
-      <View>
-        <Text> LoginScreen </Text>
-      </View>
+      <Mutation mutation={LOGIN_MUTATION} onCompleted={this.navigateToApp}>
+        {(login, { loading, error }) => (
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            validationSchema={LoginSchema}
+            onSubmit={(values: FormValues) => {
+              login({ variables: values });
+            }}
+          >
+            {props => (
+              <View style={styles.container}>
+                <View style={styles.content}>
+                  <Text h4 style={styles.heading}>
+                    Login
+                  </Text>
+                  <ErrorMessage error={error} />
+                  <View style={styles.fieldContainer}>
+                    <FormLabel>Email</FormLabel>
+                    <FormInput
+                      keyboardType="email-address"
+                      textContentType="emailAddress"
+                      underlineColorAndroid="#00ccbb"
+                      inputStyle={styles.input}
+                      onChangeText={props.handleChange("email")}
+                      onBlur={props.handleBlur("email")}
+                      value={props.values.email}
+                    />
+                    {props.touched.email && props.errors.email && (
+                      <FormValidationMessage>
+                        {props.errors.email}
+                      </FormValidationMessage>
+                    )}
+                  </View>
+                  <View style={styles.fieldContainer}>
+                    <FormLabel>Password</FormLabel>
+                    <FormInput
+                      textContentType="password"
+                      secureTextEntry
+                      underlineColorAndroid="#00ccbb"
+                      inputStyle={styles.input}
+                      onChangeText={props.handleChange("password")}
+                      onBlur={props.handleBlur("password")}
+                      value={props.values.password}
+                    />
+                    {props.touched.password && props.errors.password && (
+                      <FormValidationMessage>
+                        {props.errors.password}
+                      </FormValidationMessage>
+                    )}
+                  </View>
+                  <Button
+                    title="Login"
+                    buttonStyle={[styles.button, styles.primary]}
+                    loading={loading}
+                    onPress={props.handleSubmit}
+                  />
+                  <Button
+                    title="Signup"
+                    buttonStyle={[styles.button, styles.secondary]}
+                    onPress={this.goToSignup}
+                  />
+                  <Button
+                    title="Forgot password?"
+                    color="#2e3333"
+                    buttonStyle={styles.link}
+                    onPress={this.goToForgotPassword}
+                  />
+                </View>
+              </View>
+            )}
+          </Formik>
+        )}
+      </Mutation>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  content: {
+    width: "100%"
+  },
+  heading: {
+    marginBottom: 16,
+    textAlign: "center"
+  },
+  fieldContainer: {
+    marginBottom: 16
+  },
+  input: {
+    margin: 0,
+    width: "100%"
+  },
+  button: {
+    marginBottom: 16
+  },
+  primary: {
+    backgroundColor: "#00ccbb"
+  },
+  secondary: {},
+  link: {
+    backgroundColor: "transparent"
+  }
+});
+
+export default LoginScreen;

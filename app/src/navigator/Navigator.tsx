@@ -3,15 +3,29 @@ import {
   createSwitchNavigator,
   createAppContainer
 } from "react-navigation";
-import { AuthLoadingScreen, LoginScreen, HomeScreen } from "../screens";
+import {
+  AuthLoadingScreen,
+  LoginScreen,
+  SignupScreen,
+  ForgotPasswordScreen,
+  HomeScreen
+} from "../screens";
 
 const AppStack = createStackNavigator({
   Home: HomeScreen
 });
 
-const AuthStack = createStackNavigator({
-  Login: LoginScreen
-});
+const AuthStack = createStackNavigator(
+  {
+    Login: LoginScreen,
+    Signup: SignupScreen,
+    ForgotPassword: ForgotPasswordScreen
+  },
+  {
+    initialRouteName: "Login"
+    // headerMode: "none"
+  }
+);
 
 const AppNavigator = createSwitchNavigator(
   {
