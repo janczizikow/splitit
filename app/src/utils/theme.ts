@@ -7,7 +7,8 @@ const colors = {
   border: "#bac3c3",
   greyBg: "#f9fafa",
   lightGreyBg: "#f5f5f5",
-  headingColor: "#2e3333"
+  headingColor: "#2e3333",
+  textColor: "#828585"
 };
 
 const borderRadius = 2;

@@ -36,9 +36,9 @@ const ErrorMessage: React.FunctionComponent<Props> = ({ error }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    marginVertical: 24,
     marginHorizontal: 12,
-    marginBottom: 24,
+    padding: 16,
     textAlign: "center",
     backgroundColor: theme.colors.errorBg
   },

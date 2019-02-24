@@ -7,6 +7,7 @@ import gql from "graphql-tag";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import ErrorMessage from "../components/ErrorMessage";
+import SuccessMessage from "../components/SuccessMessage";
 
 const FORGOT_PASSWORD_MUTATION = gql`
   mutation requestResetPassword($email: String!) {
@@ -21,10 +22,14 @@ interface FormValues {
 }
 
 const forgotPasswordSchema = Yup.object().shape({
-  email: Yup.string().required("Required")
+  email: Yup.string()
+    .email("Email address is invalid")
+    .required("Required")
 });
 
-export default class ForgotPasswordScreen extends PureComponent {
+export default class ForgotPasswordScreen extends PureComponent<
+  NavigationScreenProps
+> {
   static navigationOptions = ({ navigation }: NavigationScreenProps) => ({
     title: "Forgot Password"
   });
@@ -44,26 +49,30 @@ export default class ForgotPasswordScreen extends PureComponent {
               <View style={styles.container}>
                 <View style={styles.content}>
                   <View style={{ marginHorizontal: 16 }}>
-                    <Text style={{ textAlign: "center" }}>
+                    <Text>
                       Enter the email address you used when you joined and we’ll
                       send you instructions to reset your password.
                     </Text>
                   </View>
                   <ErrorMessage error={error} />
+                  {!error && !loading && called && (
+                    <SuccessMessage>
+                      {data.requestResetPassword.message}
+                    </SuccessMessage>
+                  )}
                   <View style={styles.fieldContainer}>
                     <FormLabel>Email</FormLabel>
                     <FormInput
                       keyboardType="email-address"
                       textContentType="emailAddress"
                       underlineColorAndroid="#00ccbb"
-                      // inputStyle={styles.input}
                       onChangeText={props.handleChange("email")}
                       onBlur={props.handleBlur("email")}
                       value={props.values.email}
                     />
                   </View>
                   <Button
-                    title="Send reset instructions"
+                    title={`Send${loading ? "ing" : ""} reset instructions`}
                     backgroundColor="#00ccbb"
                     loading={loading}
                     onPress={props.handleSubmit}

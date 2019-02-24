@@ -7,5 +7,11 @@ export const Query = {
     }
 
     return ctx.prisma.user({ id: ctx.request.userId });
+  },
+  expense(parent, { id }, ctx: Context) {
+    return ctx.prisma.expense({ id });
+  },
+  groups(parent, args, ctx: Context) {
+    return ctx.prisma.groups();
   }
 };

@@ -4,3 +4,7 @@ projects:
     extensions:
       endpoints:
         dev: ${env:PRISMA_ENDPOINT}
+        # prod:
+        #   url: ${env:PROD_PRISMA_ENDPOINT}
+        #   headers:
+        #     Authorization: "Bearer ${env:AUTH_TOKEN_ENV}"

@@ -1,5 +1,11 @@
 import React, { PureComponent } from "react";
-import { View, StyleSheet } from "react-native";
+import {
+  ScrollView,
+  View,
+  StyleSheet,
+  AsyncStorage,
+  Platform
+} from "react-native";
 import {
   Text,
   FormLabel,
@@ -8,6 +14,7 @@ import {
   Button
 } from "react-native-elements";
 import { NavigationScreenProps } from "react-navigation";
+import KeyboardSpacer from "react-native-keyboard-spacer";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import { Formik } from "formik";
@@ -41,8 +48,9 @@ class LoginScreen extends PureComponent<NavigationScreenProps> {
     header: null
   });
 
-  handleLogin = async (values: FormValues) => {
-    // await AsyncStorage.setItem('userToken', token);
+  handleLogin = async data => {
+    await AsyncStorage.setItem("userToken", data.login.id);
+    this.props.navigation.navigate("App");
   };
 
   goToSignup = () => {
@@ -53,83 +61,86 @@ class LoginScreen extends PureComponent<NavigationScreenProps> {
     this.props.navigation.navigate("ForgotPassword");
   };
 
-  navigateToApp = () => {
-    this.props.navigation.navigate("App");
-  };
-
   render() {
     return (
-      <Mutation mutation={LOGIN_MUTATION} onCompleted={this.navigateToApp}>
+      <Mutation mutation={LOGIN_MUTATION} onCompleted={this.handleLogin}>
         {(login, { loading, error }) => (
-          <Formik
-            initialValues={{ email: "", password: "" }}
-            validationSchema={LoginSchema}
-            onSubmit={(values: FormValues) => {
-              login({ variables: values });
-            }}
-          >
-            {props => (
-              <View style={styles.container}>
-                <View style={styles.content}>
-                  <Text h4 style={styles.heading}>
-                    Login
-                  </Text>
-                  <ErrorMessage error={error} />
-                  <View style={styles.fieldContainer}>
-                    <FormLabel>Email</FormLabel>
-                    <FormInput
-                      keyboardType="email-address"
-                      textContentType="emailAddress"
-                      underlineColorAndroid="#00ccbb"
-                      inputStyle={styles.input}
-                      onChangeText={props.handleChange("email")}
-                      onBlur={props.handleBlur("email")}
-                      value={props.values.email}
+          <>
+            <Formik
+              initialValues={{ email: "", password: "" }}
+              validationSchema={LoginSchema}
+              onSubmit={(values: FormValues) => {
+                login({ variables: values });
+              }}
+            >
+              {props => (
+                <ScrollView
+                  style={styles.container}
+                  contentContainerStyle={styles.contentContainer}
+                  keyboardShouldPersistTaps="handled"
+                >
+                  <View style={styles.content}>
+                    <Text h4 style={styles.heading}>
+                      Login
+                    </Text>
+                    <ErrorMessage error={error} />
+                    <View style={styles.fieldContainer}>
+                      <FormLabel>Email</FormLabel>
+                      <FormInput
+                        keyboardType="email-address"
+                        textContentType="emailAddress"
+                        underlineColorAndroid="#00ccbb"
+                        inputStyle={styles.input}
+                        onChangeText={props.handleChange("email")}
+                        onBlur={props.handleBlur("email")}
+                        value={props.values.email}
+                      />
+                      {props.touched.email && props.errors.email && (
+                        <FormValidationMessage>
+                          {props.errors.email}
+                        </FormValidationMessage>
+                      )}
+                    </View>
+                    <View style={styles.fieldContainer}>
+                      <FormLabel>Password</FormLabel>
+                      <FormInput
+                        textContentType="password"
+                        secureTextEntry
+                        underlineColorAndroid="#00ccbb"
+                        inputStyle={styles.input}
+                        onChangeText={props.handleChange("password")}
+                        onBlur={props.handleBlur("password")}
+                        value={props.values.password}
+                      />
+                      {props.touched.password && props.errors.password && (
+                        <FormValidationMessage>
+                          {props.errors.password}
+                        </FormValidationMessage>
+                      )}
+                    </View>
+                    <Button
+                      title="Login"
+                      buttonStyle={[styles.button, styles.primary]}
+                      loading={loading}
+                      onPress={props.handleSubmit}
                     />
-                    {props.touched.email && props.errors.email && (
-                      <FormValidationMessage>
-                        {props.errors.email}
-                      </FormValidationMessage>
-                    )}
-                  </View>
-                  <View style={styles.fieldContainer}>
-                    <FormLabel>Password</FormLabel>
-                    <FormInput
-                      textContentType="password"
-                      secureTextEntry
-                      underlineColorAndroid="#00ccbb"
-                      inputStyle={styles.input}
-                      onChangeText={props.handleChange("password")}
-                      onBlur={props.handleBlur("password")}
-                      value={props.values.password}
+                    <Button
+                      title="Signup"
+                      buttonStyle={[styles.button, styles.secondary]}
+                      onPress={this.goToSignup}
                     />
-                    {props.touched.password && props.errors.password && (
-                      <FormValidationMessage>
-                        {props.errors.password}
-                      </FormValidationMessage>
-                    )}
+                    <Button
+                      title="Forgot password?"
+                      color="#2e3333"
+                      buttonStyle={styles.link}
+                      onPress={this.goToForgotPassword}
+                    />
                   </View>
-                  <Button
-                    title="Login"
-                    buttonStyle={[styles.button, styles.primary]}
-                    loading={loading}
-                    onPress={props.handleSubmit}
-                  />
-                  <Button
-                    title="Signup"
-                    buttonStyle={[styles.button, styles.secondary]}
-                    onPress={this.goToSignup}
-                  />
-                  <Button
-                    title="Forgot password?"
-                    color="#2e3333"
-                    buttonStyle={styles.link}
-                    onPress={this.goToForgotPassword}
-                  />
-                </View>
-              </View>
-            )}
-          </Formik>
+                </ScrollView>
+              )}
+            </Formik>
+            {Platform.OS === "ios" && <KeyboardSpacer />}
+          </>
         )}
       </Mutation>
     );
@@ -138,6 +149,9 @@ class LoginScreen extends PureComponent<NavigationScreenProps> {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+  contentContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center"

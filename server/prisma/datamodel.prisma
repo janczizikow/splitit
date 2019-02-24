@@ -7,3 +7,26 @@ type User {
   name: String!
   avatar: String
 }
+
+type Expense {
+  id: ID! @unique
+  title: String!
+  image: String
+  cost: Int!
+  user: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Member {
+  id: ID! @unique
+  user: User
+  balance: Int! @default(value: 0)
+}
+
+type Group {
+  id: ID! @unique
+  name: String!
+  expenses: [Expense]!
+  members: [Member!]!
+}
